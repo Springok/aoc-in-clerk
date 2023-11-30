@@ -1,7 +1,8 @@
-;; # 🎄 Advent of Clerk
+;; # 🎄 Advent of Code 2023
 
 ;; [Advent of Code](https://adventofcode.com) with
 ;; [Clerk](https://clerk.vision).
+
 (ns aoc.index
   {:nextjournal.clerk/visibility {:code :hide :result :hide}}
   (:require [babashka.fs :as fs]
@@ -11,13 +12,10 @@
 #_(days-with-contents)
 
 (defn build-paths
-  "Computes the paths to build by looking for files in
-  `src/advent_of_clerk` and filtering out unmodified templates (files
-  with less than four lines)."
   []
   (into []
         (keep (fn [day]
-                (let [f (fs/file "src" "advent_of_clerk" (format "day_%s.clj" (cond->> day (<= day 10) (str "0"))))]
+                (let [f (fs/file "src" "aoc" "2023" (format "day_%s.clj" (cond->> day (<= day 10) (str "0"))))]
                   (when (and (.exists f)
                              (< 3 (count (str/split-lines (slurp f)))))
                     (str f)))))

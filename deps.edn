@@ -6,14 +6,12 @@
         org.babashka/cli {:mvn/version "0.5.40"}
         ;; silence log warnings
         org.slf4j/slf4j-nop {:mvn/version "1.7.36"}}
- 
+
  :aliases {:nextjournal/clerk {:exec-fn nextjournal.clerk/build!
-                               :exec-args {:index "src/advent_of_clerk/index.clj"
+                               :exec-args {:index "src/aoc/index.clj"
                                            :paths-fn aoc.index/build-paths}
                                :main-opts ["-m" "babashka.cli.exec"]}
            :nrepl {:extra-deps {philoskim/debux {:mvn/version "0.8.2"}}
                    :main-opts ["-m" "nrepl.cmdline"
                                "--middleware" "[cider.nrepl/cider-middleware]"
                                "--interactive"]}}}
-
-
