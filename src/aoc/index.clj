@@ -2,7 +2,7 @@
 
 ;; [Advent of Code](https://adventofcode.com) with
 ;; [Clerk](https://clerk.vision).
-(ns advent-of-clerk.index
+(ns aoc.index
   {:nextjournal.clerk/visibility {:code :hide :result :hide}}
   (:require [babashka.fs :as fs]
             [clojure.string :as str]
