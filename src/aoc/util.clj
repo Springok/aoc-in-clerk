@@ -4,11 +4,13 @@
     [clojure.string :as str]))
 
 ;; reference https://github.com/tschady/advent-of-code/blob/main/src/aoc/file_util.clj
-
 (defn read-file
   "Return full file contents from `path`."
   [path]
   (-> path io/resource slurp))
+
+(comment
+  (read-file "../resources/aoc/2022/day1.txt"))
 
 (defn read-chunks
   "Return file contents as collection of chunks, where chunks are separated by a
