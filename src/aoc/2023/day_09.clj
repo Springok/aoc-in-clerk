@@ -1,3 +1,3 @@
 ;; # 🎄 Advent of Clerk: Day 9
-(ns advent-of-clerk.day-09
+(ns aoc.2023.day-09
   (:require [nextjournal.clerk :as clerk]))
