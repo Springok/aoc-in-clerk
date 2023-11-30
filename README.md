@@ -17,6 +17,6 @@ it. You should then see these changes reflected in the browser.
 
 - [nextjournal/aoc.2023: A template repo for folks wanting to do Advent of Code with Clerk.](https://github.com/nextjournal/aoc.2023)
 
-## reference
+## Reference
 
-- https://github.com/elken/aoc.2023/tree/master
+- https://github.com/elken/aoc
