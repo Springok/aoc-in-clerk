@@ -1,6 +1,5 @@
 # 🎄 Advent of Code
 
-
 ## Usage
 
 ``` shell
@@ -17,6 +16,7 @@ it. You should then see these changes reflected in the browser.
 
 - [nextjournal/aoc.2023: A template repo for folks wanting to do Advent of Code with Clerk.](https://github.com/nextjournal/aoc.2023)
 
-## Reference
+- [elken/aoc](https://github.com/elken/aoc)
 
-- https://github.com/elken/aoc
+- [Using Clerk for Advent of Code](https://www.juxt.pro/blog/using-clerk-for-aoc/)
+
