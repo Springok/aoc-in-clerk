@@ -93,11 +93,11 @@
 ;; ### Solve
 (defn solve [records rule]
   (->> records
-       (map #(let [tokens (map last (re-seq rule %))
-                   first-d (->digit (first tokens))
-                   last-d  (->digit (last tokens))]
-               (-> (str first-d last-d)
-                   read-string)))
+       (map #(->> (map last (re-seq rule %))
+                  ((juxt first last))
+                  (map ->digit)
+                  (apply str)
+                  read-string))
        (apply +)))
 
 ;; ### Part 1
