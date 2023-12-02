@@ -14,19 +14,25 @@
 (def bag
   {"red" 12 "green" 13, "blue" 14})
 
+(defn parse-set [set]
+  (->> (re-seq #"\d+ red|\d+ green|\d+ blue" set)
+       (map #(str/split % #" "))
+       (map (fn[[n color]]
+              [color (read-string n)]))
+       (into (sorted-map))))
+
+(defn parse-game [game]
+  (map parse-set game))
+
 (def example-games
   (->> (util/read-file-by-line "../resources/aoc/2023/day2-ex.txt")
        (map #(str/split % #"; "))
-       (map (fn [game]
-              (->> game
-                   (map #(re-seq #"\d+ red|\d+ green|\d+ blue" %)))))))
+       (map parse-game)))
 
 (def input-games
   (->> (util/read-file-by-line "../resources/aoc/2023/day2.txt")
        (map #(str/split % #"; "))
-       (map (fn [game]
-              (->> game
-                   (map #(re-seq #"\d+ red|\d+ green|\d+ blue" %)))))))
+       (map parse-game)))
 
 ;; `example-games`
 {:nextjournal.clerk/visibility {:code :hide :result :show}}
@@ -34,20 +40,15 @@ example-games
 
 {:nextjournal.clerk/visibility {:result :hide}}
 
-;; ## (Iteration 1)
+;; ## Solution
 ;; ### Part 1
 
-;; 這邊想說用 string 硬幹 + split 來做到 filter 的效果
-{:nextjournal.clerk/visibility {:code :show :result :hide}}
 (defn possible? [set bag-set]
-  (->> (map #(str/split % #" ") set)
-       (every? (fn [[n color]]
-                 (<= (read-string n) (get bag-set color))))))
+ (every? #(<= (get set %) (get bag-set %)) (keys set)))
 
 ;; Examples
 {:nextjournal.clerk/visibility {:code :show :result :show}}
-(possible? ["4 blue" "3 red"] bag)
-(possible? ["8 green" "6 blue" "20 red"] bag)
+(possible? {"blue" 4 "red" 3} bag)
 
 {:nextjournal.clerk/visibility {:result :hide}}
 ;; 所以 part1 只是用 `map-indexed` 然後搭配上面的 filter function 紀錄下 game x 然後加總，做到我要的效果
@@ -55,8 +56,8 @@ example-games
   (->> games
        (map-indexed (fn [idx game]
                       (if (->> game
-                               (every? (fn [set]
-                                         (possible? set bag))))
+                               (every? (fn [sets]
+                                         (possible? sets bag))))
                         (inc idx)
                         0)))
        (apply +)))
@@ -79,7 +80,6 @@ example-games
 ;; 用來計算每局 game 的 power
 (defn power [game]
   (->> game
-       (map set->map)
        (apply merge-with max)
        vals
        (apply *)))
