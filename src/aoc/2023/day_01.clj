@@ -26,7 +26,7 @@
 (def input
   (util/read-file-by-line "../resources/aoc/2023/day1.txt"))
 
-;; ## (Iteration 1)
+;; ## Solution - Iteration 1
 
 (def mapping
   (let [numbering ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine"]]
@@ -76,7 +76,7 @@
        (apply +)))
 
 ;; ---
-;; ## (Iteration 2)
+;; ## Solution - Iteration 2
 
 ;; 搭配 lookahead 是比較精簡的解法呀～不過也是需要轉換數字，但也就只要處理最後一個跟第一個的轉換就好啦～
 
