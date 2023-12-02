@@ -1,6 +1,7 @@
 ;; # 🎄 Advent of Code: 2023 Day 2: Cube Conundrum
 ^{:nextjournal.clerk/visibility :hide-ns}
 (ns aoc.2023.day-02
+  {:nextjournal.clerk/toc true}
   (:require [nextjournal.clerk :as clerk]
             [aoc.util :as util]
             [clojure.string :as str]
