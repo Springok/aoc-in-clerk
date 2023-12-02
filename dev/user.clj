@@ -5,5 +5,5 @@
 (clerk/serve! {:port 7878 :browse true})
 
 (comment
-  (clerk/build! {:paths (index/build-paths) :browse true}))
+  (clerk/build! {:index "aoc/index.clj" :paths (index/build-paths) :browse true}))
 
