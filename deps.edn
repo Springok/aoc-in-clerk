@@ -2,15 +2,28 @@
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
         nrepl/nrepl {:mvn/version "0.8.3"}
         cider/cider-nrepl {:mvn/version "0.28.7"}
-        io.github.nextjournal/clerk {:git/sha "bdf79084374fc89cd956ec076847c0845c80c911"}
-        org.babashka/cli {:mvn/version "0.5.40"}
+        io.github.nextjournal/clerk {:mvn/version "0.15.957"}
+        clj-http/clj-http {:mvn/version "3.12.3"}
+        org.clj-commons/hickory {:mvn/version "0.7.3"}
+        org.clojure/core.match {:mvn/version "1.0.1"}
+        org.babashka/cli {:mvn/version "0.7.52"}
         ;; silence log warnings
-        org.slf4j/slf4j-nop {:mvn/version "1.7.36"}}
+        org.slf4j/slf4j-nop {:mvn/version "2.0.7"}}
 
  :aliases {:nextjournal/clerk {:exec-fn nextjournal.clerk/build!
+                               :jvm-opts ["-Dclojure.main.report=stdout"]
                                :exec-args {:index "src/aoc/index.clj"
-                                           :paths-fn aoc.index/build-paths}
+                                           ; :ssr true
+                                           ; :compile-css true
+                                           :paths ["src/aoc/*/*.clj"]}
                                :main-opts ["-m" "babashka.cli.exec"]}
+           :serve {:exec-fn nextjournal.clerk/serve!
+                   :exec-args {:index "src/aoc/index.clj"
+                               :watch-paths ["src"]
+                               :port 7878
+                               :compile-css true
+                               :paths ["src/aoc/*/*.clj"]}
+                   :main-opts ["-m" "babashka.cli.exec"]}
            :nrepl {:extra-deps {philoskim/debux {:mvn/version "0.8.2"}}
                    :main-opts ["-m" "nrepl.cmdline"
                                "--middleware" "[cider.nrepl/cider-middleware]"
