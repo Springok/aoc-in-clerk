@@ -29,7 +29,6 @@
 {:nextjournal.clerk/visibility {:result :hide}}
 (defn win? [t tt d]
   (let [t' (- tt t)]
-    ; (prn t d)
     (> (* t' t) d)))
 
 {:nextjournal.clerk/visibility {:result :show}}
@@ -37,30 +36,28 @@
 (win? 1 7 9)
 
 {:nextjournal.clerk/visibility {:result :hide}}
-(defn process [[tt d]]
+(defn race [[tt d]]
   (loop [ts (range (inc tt))
-         ways 0
-         win-ts []]
+         ways 0]
     (let [t (first ts)
           next-ts (drop 1 ts)]
       (if (empty? ts)
-       {:ways ways :win-ts win-ts}
-       (recur next-ts (if (win? t tt d) (inc ways) ways) (if (win? t tt d) (conj win-ts t) win-ts))))))
+       ways
+       (recur next-ts (if (win? t tt d) (inc ways) ways))))))
 
 {:nextjournal.clerk/visibility {:result :show}}
 ;; Example
-(process [7 9])
+(race [7 9])
 
 {:nextjournal.clerk/visibility {:result :hide}}
 (defn part1 [input]
   (->> (parse-input input)
-       (map process)
-       (map :ways)
+       (map race)
        (reduce *)))
 
 ;; ### Part 2
 
-;; Part2 這裡我就用硬解，只是調整一下 parse 的方式就用同樣的 process 來做，的確是需要跑一下，可以往下拉，看時間。
+;; Part2 這裡我就用暴力解，只是調整一下 parse 的方式就用同樣的 race function 來做，的確是需要跑一下，可以往下拉，看時間。
 
 {:nextjournal.clerk/visibility {:code :show :result :hide}}
 (defn parse-input-part2 [file]
@@ -75,9 +72,7 @@
 
 {:nextjournal.clerk/visibility {:result :hide}}
 (defn part2 [input]
-  (-> (parse-input-part2 input)
-      (process)
-      :ways))
+  (race (parse-input-part2 input)))
 
 ;; ## Answer
 
