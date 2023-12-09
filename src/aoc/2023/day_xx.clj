@@ -7,7 +7,9 @@
             [clojure.string :as cs]
             [clojure.test :refer [deftest is]]))
 
-;; ## Problem
+;; ## After
+
+;; ## Problem /Before
 
 ;; ## Example Data / Input
 {:nextjournal.clerk/visibility {:result :hide}}
