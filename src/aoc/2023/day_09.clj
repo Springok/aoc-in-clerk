@@ -4,11 +4,11 @@
   {:nextjournal.clerk/toc true}
   (:require [nextjournal.clerk :as clerk]
             [aoc.util :as util]
-            [clojure.string :as cs]
             [clojure.test :refer [deftest is]]))
 
 ;; ## After
 ;;  - `2023-12-09` - 覺得 Part2 應該還是有更好的解法才對，覺得自己不知道卡在哪裡...
+;;  - `2023-12-09` - 看了別人的解答之後，發現我根本就把 record 反過來 (reverser) 做就好啦...用不到 `left-most`
 
 ;; ## Problem
 ;; 看起來又是個 iteration 的遊戲啦，然後要一層層反推
@@ -37,31 +37,21 @@
           next-record (->> (partition 2 1 current-record)
                            (map #(apply - (reverse %))))]
       (if (every? zero? current-record)
-        history
+        (->> history
+             (map last)
+             (apply +))
         (recur (conj history next-record))))))
 
 (defn part1 [input]
   (->> (parse-input input)
        (map process)
-       (map #(map last %))
-       (map #(apply + %))
        (reduce +)))
 
 ;; ### Part 2
-
-;; 原本看覺得蠻簡單的，結果加上 parse 的處理錯誤，硬是多卡了我 30 分鐘，好無言呀...
-;; 弄了一個 left-most 來反推每筆 history 對應的數字
-(defn left-most [history]
-  (loop [history history]
-    (if (= 2 (count history))
-      (apply - history)
-      (recur (conj (vec (drop-last 2 history)) (apply - (take-last 2 history)))))))
-
 (defn part2 [input]
   (->> (parse-input input)
+       (map reverse)
        (map process)
-       (map #(map first %))
-       (map left-most)
        (reduce +)))
 
 ;; ## Answer
@@ -91,3 +81,11 @@
   (is (= 114 (part1 "../resources/aoc/2023/day9-ex.txt")))
   (is (= 2 (part2 "../resources/aoc/2023/day9-ex.txt"))))
 
+;; ## Obsoleted in first iteration
+;; 原本看覺得蠻簡單的，結果加上 parse 的處理錯誤，硬是多卡了我 30 分鐘，好無言呀...
+;; 弄了一個 left-most 來反推每筆 history 對應的數字
+(defn left-most [history]
+  (loop [history history]
+    (if (= 2 (count history))
+      (apply - history)
+      (recur (conj (vec (drop-last 2 history)) (apply - (take-last 2 history)))))))
